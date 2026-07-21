@@ -14,6 +14,7 @@ from .step_parser import StepParser
 from .weld_extractor import WeldExtractor
 from .excel_exporter import export_to_excel
 from .json_exporter import export_to_json
+from .vlm_integrator import VlmDrawingIntegrator
 
 
 def parse_args():
@@ -79,6 +80,14 @@ def main():
     print(f"   Welds found: {result.total_welds}")
     for note in result.notes:
         print(f"   {note}")
+    
+    # Phase 2b: Integrate VLM drawing analysis (if available)
+    vlm_json = output_dir / 'vlm_drawing_analysis.json'
+    if vlm_json.exists():
+        print(f"\n📐 Phase 2b: Integrating VLM drawing analysis...")
+        integrator = VlmDrawingIntegrator(str(vlm_json))
+        result = integrator.integrate(result)
+        print(f"   Total welds after VLM integration: {result.total_welds}")
     
     # Phase 3: Export to Excel
     print(f"\n📊 Phase 3: Exporting to Excel...")
