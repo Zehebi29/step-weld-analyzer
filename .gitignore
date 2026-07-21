@@ -1,0 +1,9 @@
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+.venv/
+data/*.stp
+output/*.xlsx
+output/*.json
